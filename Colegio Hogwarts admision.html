@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Carta de admisión · Colegio Hogwarts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0907;--paper:#e8d6ac;--ink:#33230f;--gold:#d4af37;--hc:#d4af37;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#f3e7c9;font-family:"IM Fell English",Georgia,serif;font-size:18px}
+button,input{font:inherit}
+.cr{min-height:100vh;display:grid;place-items:center;padding:24px 14px;background:radial-gradient(ellipse at 50% 0,#1b2347 0,#0b0907 70%)}
+.card{width:min(94vw,520px);background:linear-gradient(160deg,#ecdcb4,#d9c28f);color:var(--ink);padding:30px 28px;border-radius:4px;box-shadow:0 20px 60px #000a,inset 0 0 60px #8a6a2c55}
+.card h1{font:700 26px Cinzel,serif;margin:0 0 4px;text-align:center}
+.card p{margin:0 0 16px;text-align:center;font-style:italic}
+.card label{display:block;margin:12px 0 0;font-size:15px}
+.card input{display:block;width:100%;margin-top:4px;padding:10px 12px;background:#f6ebcc;border:1px solid #8a6a2c;border-radius:3px;color:var(--ink)}
+.btn{display:inline-block;margin-top:16px;padding:11px 18px;background:#5c1010;color:#f6e7bd;border:1px solid var(--gold);border-radius:3px;font:500 15px Cinzel,serif;cursor:pointer;text-decoration:none}
+.btn:hover{background:#7a1616}
+.btn.alt{background:#3a2a12}
+.err{color:#8a1010;min-height:20px;margin:8px 0 0!important}
+#out .row{display:flex;flex-wrap:wrap;gap:8px}
+.stage{position:fixed;inset:0;overflow:hidden;background:#000;cursor:pointer;user-select:none;-webkit-user-select:none}
+.cam{position:absolute;inset:0;transition:transform 4.5s cubic-bezier(.5,0,.2,1);transform-origin:50% 62%;z-index:1}
+.stage[data-cam="1"] .cam{transform:scale(1.15)}
+.stage[data-cam="2"] .cam{transform:scale(1.5) translateY(-3%)}
+.stage[data-cam="3"] .cam{transform:scale(1.9) translateY(-13%)}
+.bg{position:absolute;inset:0;width:100%;height:100%}
+.candle{position:absolute;width:3px;height:12px;background:#f5ecd0;animation:bob var(--d) ease-in-out infinite alternate}
+.candle:before{content:"";position:absolute;left:50%;top:-10px;width:6px;height:10px;margin-left:-3px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(#fff6c8,#ffb347 60%,transparent);box-shadow:0 0 14px 6px #ffa83c70;animation:fl .15s infinite alternate}
+@keyframes bob{to{transform:translateY(12px)}}
+@keyframes fl{to{transform:scale(1.2,.88);opacity:.8}}
+.mc,.stool{position:absolute;opacity:0;transition:opacity 1.6s}
+.mc.on,.stool.on{opacity:1}
+.mc{left:34%;bottom:21%;width:28vh;filter:drop-shadow(0 0 22px #ffae4a66);animation:br 4s ease-in-out infinite alternate}
+.stool{left:50%;margin-left:-16vh;bottom:3%;width:32vh}
+@keyframes br{to{transform:translateY(-4px) scale(1.01)}}
+.hat{position:absolute;left:-6%;top:0;width:112%;height:52vh;z-index:3;transform:translateY(-125%);transition:transform 3.2s cubic-bezier(.3,0,.2,1);filter:drop-shadow(0 18px 24px #000)}
+.hat.down{transform:translateY(-6%)}
+.hat svg{width:100%;height:100%}
+.mouth{transform-origin:50% 50%;transform-box:fill-box}
+.talk .mouth{animation:mo .22s infinite alternate}
+@keyframes mo{to{transform:scaleY(2.6)}}
+.vig{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity 2.5s;background:radial-gradient(ellipse at 50% 62%,transparent 12%,#000 78%)}
+.vig.on{opacity:.93}
+.fade{position:absolute;inset:0;z-index:4;background:#000;opacity:1;pointer-events:none;transition:opacity 1s}
+.sub{position:absolute;z-index:5;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 4vh);transform:translateX(-50%);width:min(92vw,780px);padding:16px 24px 14px;background:#0c0804cc;border:1px solid #d4af3759;backdrop-filter:blur(4px);opacity:0;transition:opacity .6s}
+.sub.on{opacity:1}
+.sub b{display:block;font:500 14px Cinzel,serif;color:var(--gold);min-height:18px;letter-spacing:.06em}
+.sub.hv b{color:#e0a96a}
+.sub.hv p{font-style:italic;color:#f0d9b0}
+.sub p{margin:6px 0 4px;font-size:clamp(17px,2.3vw,24px);line-height:1.5;min-height:3em}
+.sub i{display:block;text-align:right;font-size:13px;opacity:0;transition:opacity .5s;color:#b9a679}
+.sub.shout{background:none;border:0;backdrop-filter:none;bottom:34vh;text-align:center}
+.sub.shout b,.sub.shout i{display:none}
+.sub.shout p{font:700 clamp(40px,10vw,110px) Cinzel,serif;color:var(--hc);text-shadow:0 0 30px var(--hc),0 4px 0 #000;font-style:normal;line-height:1.1}
+#snd{position:absolute;z-index:9;top:calc(env(safe-area-inset-top,0px) + 12px);right:12px;width:42px;height:42px;border-radius:50%;background:#0009;border:1px solid #d4af3780;color:#fff;font-size:18px;cursor:pointer}
+#bk{position:absolute;z-index:9;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;height:42px;padding:0 14px;border-radius:21px;background:#0009;border:1px solid #d4af3780;color:#f3e7c9;font:500 14px Cinzel,serif;cursor:pointer}
+.env{position:absolute;inset:0;z-index:7;display:grid;place-items:center;padding:16px;background:radial-gradient(ellipse at 50% 40%,#2b1a0c,#080604);overflow:auto;cursor:default}
+.paper{width:min(92vw,540px);background:linear-gradient(150deg,#efdfb8,#d6bd86);color:var(--ink);padding:34px 30px;border-radius:3px;box-shadow:0 24px 70px #000,inset 0 0 70px #7a5a1f66;text-align:center;line-height:1.5}
+.paper h2{font:700 19px Cinzel,serif;margin:0 0 4px}
+.paper .to{font-size:22px;margin:22px 0 6px}
+.paper.open{text-align:left;font-size:17px;animation:unf 1.2s ease-out}
+.paper.open h2{text-align:center}
+@keyframes unf{from{transform:scaleY(.2);opacity:0}}
+.seal{width:84px;height:84px;margin:12px auto 0;border-radius:50%;border:0;cursor:pointer;background:radial-gradient(circle at 35% 30%,#c42b2b,#6b0909 70%);color:#f0c46a;font:700 40px Cinzel,serif;box-shadow:0 6px 14px #0008,inset 0 0 12px #000a;animation:pu 2s infinite alternate}
+@keyframes pu{to{transform:scale(1.07)}}
+.end{position:absolute;inset:0;z-index:8;display:none;place-items:center;padding:16px;overflow:auto;background:radial-gradient(ellipse at 50% 30%,var(--c1),#050403 80%);cursor:default}
+.end.on{display:grid}
+.end .in{width:min(94vw,520px);text-align:center;animation:unf 1.4s ease-out}
+.crest{width:110px;margin:0 auto 6px}
+.end h2{font:700 clamp(26px,6vw,40px) Cinzel,serif;margin:6px 0;color:var(--c2)}
+.end ul{list-style:none;padding:0;margin:14px 0}
+.end li{margin:5px 0;font-style:italic}
+.end small{display:block;opacity:.8;margin:6px 0}
+.end .btn{background:#0008;margin:6px 4px 0}
+.spark{position:absolute;z-index:6;width:5px;height:5px;border-radius:50%;background:#ffd76a;box-shadow:0 0 8px #ffc83a;pointer-events:none;animation:sp 3s ease-out forwards}
+@keyframes sp{to{transform:translate(var(--x),var(--y));opacity:0}}
+@media (prefers-reduced-motion:reduce){.cam,.hat{transition-duration:.01s}.candle,.candle:before,.mc,.seal{animation:none}}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s),app=$("#app");
+const enc=o=>"c"+[...new TextEncoder().encode(JSON.stringify(o))].map(x=>x.toString(16).padStart(2,"0")).join("");
+const dec=h=>{try{return JSON.parse(new TextDecoder().decode(new Uint8Array(h.slice(1).match(/../g).map(v=>parseInt(v,16)))))}catch(e){return null}};
+const MES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const SG=[["Capricornio",1,19,"t"],["Acuario",2,18,"a"],["Piscis",3,20,"w"],["Aries",4,19,"f"],["Tauro",5,20,"t"],["Géminis",6,20,"a"],["Cáncer",7,22,"w"],["Leo",8,22,"f"],["Virgo",9,22,"t"],["Libra",10,22,"a"],["Escorpio",11,21,"w"],["Sagitario",12,21,"f"]];
+const EL={f:"fuego",t:"tierra",a:"aire",w:"agua"};
+const QL={Aries:["un valor que no pide permiso","una iniciativa impaciente","un corazón que se enciende ante la injusticia"],Tauro:["una lealtad a prueba de dragones","una paciencia casi mágica","una voluntad firme como los muros de Hogwarts"],Géminis:["una mente veloz como una snitch","una curiosidad que abre cualquier puerta","un ingenio con mil caras"],Cáncer:["una intuición que lee los corazones","una protección feroz hacia los tuyos","una memoria que guarda cada hechizo y cada abrazo"],Leo:["un carisma que llenaría el Gran Comedor","una generosidad sin corona","una valentía que no necesita aplausos"],Virgo:["una precisión digna de un maestro de pociones","una mirada que no deja escapar un detalle","una humildad que sirve a los demás"],Libra:["un sentido de la justicia sereno","una elegancia al hablar y al callar","un don para reconciliar a los enemigos"],Escorpio:["una determinación que inquietaría a los magos oscuros","una intensidad que no se apaga","un talento secreto para descubrir lo oculto"],Sagitario:["un espíritu explorador de bosques prohibidos","un optimismo contagioso","una sed de verdad que cruza fronteras"],Capricornio:["una ambición disciplinada","una constancia que escala cualquier torre","una sabiduría poco común a tu edad"],Acuario:["una originalidad que desafía lo establecido","una mente brillante e independiente","una visión del futuro que otros no ven"],Piscis:["una imaginación sin fronteras","una compasión profunda","una magia intuitiva que no necesita varita"]};
+const HS={f:{n:"Gryffindor",e:"🦁",c1:"#6e0a0a",c2:"#ffc500",t:"el valor, la audacia y la nobleza de espíritu",m:"Donde habitan los valientes de corazón",g:"Nick Casi Decapitado"},t:{n:"Hufflepuff",e:"🦡",c1:"#8a6a10",c2:"#ffe27a",t:"la lealtad, la paciencia y el juego limpio",m:"Donde se valora el trabajo y la lealtad",g:"El Fraile Gordo"},a:{n:"Ravenclaw",e:"🦅",c1:"#0e1a40",c2:"#c9a063",t:"el ingenio, la sabiduría y la curiosidad",m:"Donde brillan las mentes agudas",g:"La Dama Gris"},w:{n:"Slytherin",e:"🐍",c1:"#0f3320",c2:"#c4cdc8",t:"la ambición, la astucia y la determinación",m:"Donde los ambiciosos hallan a sus iguales",g:"El Barón Sanguinario"}};
+function info(b){const[y,m,d]=b.split("-").map(Number);const s=SG.find(x=>m<x[1]||(m==x[1]&&d<=x[2]))||SG[0];return{fecha:`${d} de ${MES[m-1]} de ${y}`,sign:s[0],el:s[3],h:HS[s[3]]}}
+let AC,voiceOn=true,tm,runId=0,mt,mxg;
+function stopAll(){runId++;clearInterval(tm);clearInterval(mt);mxg=null;try{speechSynthesis.cancel()}catch(e){}try{AC&&AC.close()}catch(e){}AC=null}
+function audio(){try{AC=new(window.AudioContext||window.webkitAudioContext)();const g=AC.createGain();g.gain.setValueAtTime(.0001,AC.currentTime);g.gain.exponentialRampToValueAtTime(.05,AC.currentTime+5);g.connect(AC.destination);[110,164.8,220.4].forEach((f,i)=>{const o=AC.createOscillator(),l=AC.createOscillator(),lg=AC.createGain();o.type=i?"sine":"triangle";o.frequency.value=f;l.frequency.value=.07+i*.04;lg.gain.value=1.6;l.connect(lg);lg.connect(o.frequency);o.connect(g);o.start();l.start()})}catch(e){}}
+function music(){if(!AC)return;const ac=AC,mx=ac.createGain();mx.gain.value=.5;mxg=mx;const dl=ac.createDelay(1),fb=ac.createGain();dl.delayTime.value=.42;fb.gain.value=.38;dl.connect(fb);fb.connect(dl);mx.connect(ac.destination);mx.connect(dl);dl.connect(ac.destination);
+ const SC=[164.81,185,196,220,246.94,261.63,293.66,329.63,369.99,392,440,493.88,523.25],CH=[[82.41,123.47],[65.41,98],[98,146.83],[73.42,110]],B=.95;let nxt=ac.currentTime+.3,bar=0,p=6;
+ function bell(f,t,v){[1,2.01,3.97].forEach((m,j)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f*m;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v/(j*1.8+1),t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+2.4-j*.6);o.connect(g);g.connect(mx);o.start(t);o.stop(t+2.5)})}
+ mt=setInterval(()=>{if(ac.state=="closed")return;while(nxt<ac.currentTime+2){const c=CH[bar%4];bell(c[0],nxt,.14);bell(c[1],nxt+B,.06);bell(c[1]*2,nxt+2*B,.05);[0,1,2].forEach(k=>{if(k==0||Math.random()<.7){p=Math.max(2,Math.min(SC.length-1,p+[-2,-1,-1,1,1,2][Math.floor(Math.random()*6)]));bell(SC[p],nxt+k*B+(k?0:.02),.08)}});nxt+=3*B;bar++}},400)}
+function chime(){if(!AC)return;[523.3,659.3,784,1046.5].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+i*.18;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.12,t+.05);g.gain.exponentialRampToValueAtTime(.0001,t+2.2);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+2.3)})}
+function say(t,hat){if(!voiceOn||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="es-ES";const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.startsWith("es"));if(v)u.voice=v;u.pitch=hat?.45:1.05;u.rate=hat?.8:.93;speechSynthesis.speak(u)}
+function copy(inp){inp.select();try{navigator.clipboard.writeText(inp.value)}catch(e){}try{document.execCommand("copy")}catch(e){}}
+let last={},fromCr=false;
+function creator(){
+ app.innerHTML=`<main class="cr"><div class="card"><h1>Lechucería de Hogwarts</h1><p>Prepara una carta de admisión personalizada y envíala por correo.</p>
+ <label>Nombre del mago o la bruja<input id="n" autocomplete="off" placeholder="Ej.: Valentina Torres"></label>
+ <label>Correo del destinatario (opcional)<input id="e" type="email" placeholder="nombre@correo.com"></label>
+ <label>Fecha de cumpleaños<input id="b" type="date"></label>
+ <label>Tu nombre (opcional)<input id="s" autocomplete="off" placeholder="Quién envía la lechuza"></label>
+ <button class="btn" id="go">Preparar la lechuza</button><p class="err" id="err"></p>
+ <div id="out" hidden><label>Enlace de la carta<input id="lk" readonly></label><div class="row"><button class="btn alt" id="pv">Ver vista previa</button><button class="btn alt" id="cp">Copiar enlace</button><a class="btn" id="ml" target="_top">Enviar por correo</a></div></div></div></main>`;
+ ["n","e","b","s"].forEach(k=>{if(last[k])$("#"+k).value=last[k]});
+ $("#go").onclick=()=>{
+  const n=$("#n").value.trim(),e=$("#e").value.trim(),b=$("#b").value,s=$("#s").value.trim();last={n,e,b,s};
+  const er=$("#err");
+  if(!n)return er.textContent="Escribe el nombre del destinatario.";
+  if(e&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e))return er.textContent="Escribe un correo válido.";
+  if(!b)return er.textContent="Elige la fecha de cumpleaños.";
+  er.textContent="";
+  const tok=enc({n,b,s}),link=location.href.split("#")[0]+"#"+tok;
+  const body=`Estimado/a ${n}:\n\nUna lechuza ha llegado con una carta sellada del Colegio Hogwarts de Magia y Hechicería. Para abrirla, sigue este enlace:\n\n${link}\n\nTe recomendamos subir el volumen y abrirla con la luz baja.\n\nMinerva McGonagall, subdirectora${s?`\n(Lechuza enviada por ${s})`:""}`;
+  $("#lk").value=link;$("#out").hidden=false;
+  $("#ml").href=`mailto:${encodeURIComponent(e)}?subject=${encodeURIComponent("Carta de admisión al Colegio Hogwarts")}&body=${encodeURIComponent(body)}`;
+  $("#pv").onclick=()=>{fromCr=true;location.hash=tok};
+  $("#cp").onclick=()=>{copy($("#lk"));$("#cp").textContent="Enlace copiado"};
+ };
+}
+const HAT=`<svg viewBox="0 0 400 200" preserveAspectRatio="none"><defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1a0c"/><stop offset="1" stop-color="#6b4a28"/></linearGradient></defs><path d="M-10 0H410V150Q370 196 320 158T210 176T110 156T-10 170Z" fill="url(#hg)"/><path d="M40 20Q90 90 60 150M170 0Q150 80 190 160M300 10Q340 80 310 150" stroke="#1a0f06" stroke-width="3" fill="none" opacity=".7"/><path d="M80 60l30 6M240 40l34 8M330 90l24-6" stroke="#b08a54" stroke-width="2" stroke-dasharray="4 4"/><path class="mouth" d="M120 128Q205 156 290 126" stroke="#120a04" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`;
+const MCG=`<svg viewBox="0 -45 200 445"><defs><linearGradient id="rb" x1="0" x2="1"><stop offset="0" stop-color="#0c3323"/><stop offset=".5" stop-color="#1f7650"/><stop offset="1" stop-color="#0a2a1c"/></linearGradient></defs><path d="M58 150Q100 134 142 150L190 400H10Z" fill="url(#rb)"/><path d="M84 146L100 210L116 146Z" fill="#ebe6d6"/><rect x="90" y="118" width="20" height="32" fill="#d9b997"/><ellipse cx="100" cy="92" rx="29" ry="37" fill="#e5c6a6"/><path d="M69 84Q70 50 100 48Q130 50 131 84Q120 64 100 64Q80 64 69 84Z" fill="#5f5f66"/><ellipse cx="100" cy="46" rx="12" ry="8" fill="#5f5f66"/><path d="M66 58Q100 46 134 58L112 52L106 -26Q100 -40 94 -26L88 52Z" fill="#14110f"/><ellipse cx="100" cy="58" rx="49" ry="9" fill="#14110f"/><circle cx="87" cy="90" r="9" fill="none" stroke="#2c2c2c" stroke-width="2"/><circle cx="113" cy="90" r="9" fill="none" stroke="#2c2c2c" stroke-width="2"/><path d="M96 90h8" stroke="#2c2c2c" stroke-width="2"/><circle cx="87" cy="90" r="2" fill="#222"/><circle cx="113" cy="90" r="2" fill="#222"/><path d="M90 114Q100 118 110 114" stroke="#8a4a3a" stroke-width="2" fill="none"/><path d="M92 60Q100 56 108 60" stroke="#b08a2a" stroke-width="3" fill="none"/></svg>`;
+const STOOL=`<svg viewBox="0 0 200 140"><ellipse cx="100" cy="36" rx="78" ry="20" fill="#5a3a1c"/><ellipse cx="100" cy="32" rx="72" ry="16" fill="#7a5128"/><path d="M40 44L22 138M100 54V138M160 44L178 138" stroke="#4a2f18" stroke-width="12" stroke-linecap="round"/></svg>`;
+function bgSVG(){return `<svg class="bg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#04060e"/><stop offset=".55" stop-color="#14121c"/><stop offset="1" stop-color="#2a1a0e"/></linearGradient><radialGradient id="gl" cx=".5" cy=".72" r=".6"><stop offset="0" stop-color="#ffb35a" stop-opacity=".38"/><stop offset="1" stop-color="#ffb35a" stop-opacity="0"/></radialGradient></defs><rect width="1000" height="600" fill="url(#w)"/>`+
+ [90,270,450,630,810].map(x=>`<path d="M${x} 340V170Q${x+50} 80 ${x+100} 170V340Z" fill="#17254a" stroke="#3a2d1d" stroke-width="7"/><path d="M${x+50} 110V340M${x} 230H${x+100}" stroke="#3a2d1d" stroke-width="3"/>`).join("")+
+ [[30,"#7f0909"],[330,"#ecb939"],[620,"#0e1a40"],[920,"#1a472a"]].map(([x,c])=>`<path d="M${x} 0h50v210l-25-24-25 24Z" fill="${c}"/>`).join("")+
+ `<polygon points="440,390 560,390 650,600 350,600" fill="#3d2513"/><polygon points="290,390 400,390 310,600 20,600" fill="#33200f"/><polygon points="600,390 710,390 980,600 690,600" fill="#33200f"/><rect y="388" width="1000" height="6" fill="#120a04"/><rect width="1000" height="600" fill="url(#gl)"/></svg>`}
+function play(d){
+ stopAll();const my=runId,n=d.n,I=info(d.b),H=I.h,q=QL[I.sign];
+ app.innerHTML=`<div class="stage" id="st" data-cam="0" style="--hc:${H.c2}"><div class="cam">${bgSVG()}<div id="cd"></div><div class="mc" id="mc">${MCG}</div><div class="stool" id="stool">${STOOL}</div></div><div class="hat" id="hat">${HAT}</div><div class="vig" id="vig"></div><div class="fade" id="fade"></div><div class="sub" id="sub"><b id="who"></b><p id="tx"></p><i id="hint">Toca para continuar</i></div><button id="snd" aria-label="Voz y sonido">🔊</button>${fromCr?'<button id="bk">← Volver al creador</button>':''}
+ <div class="env" id="env"><div class="paper" id="pp"><h2>Colegio Hogwarts de Magia y Hechicería</h2><div class="to">Para: ${esc(n)}</div><p>Una lechuza acaba de dejar esta carta ante ti.</p><button class="seal" id="seal" aria-label="Romper el sello">H</button><p style="margin-top:14px;font-size:14px"><i>Toca el sello para abrirla</i></p></div></div>
+ <div class="end" id="end" style="--c1:${H.c1};--c2:${H.c2}"></div></div>`;
+ const cd=$("#cd");for(let i=0;i<46;i++){const c=document.createElement("div");c.className="candle";c.style.cssText=`left:${Math.random()*98}%;top:${4+Math.random()*48}%;--d:${(3+Math.random()*3).toFixed(1)}s;animation-delay:-${(Math.random()*4).toFixed(1)}s;transform:scale(${(.6+Math.random()*.6).toFixed(2)})`;cd.appendChild(c)}
+ const st=$("#st"),sub=$("#sub"),who=$("#who"),tx=$("#tx"),hint=$("#hint"),hat=$("#hat"),vig=$("#vig"),fade=$("#fade"),mc=$("#mc");
+ let i=-1,typing=false,full="",started=false,cur={};
+ $("#snd").onclick=e=>{e.stopPropagation();voiceOn=!voiceOn;e.target.textContent=voiceOn?"🔊":"🔇";if(!voiceOn)speechSynthesis.cancel();if(mxg)mxg.gain.value=voiceOn?.5:0};
+ $("#seal").onclick=()=>{audio();music();$("#pp").className="paper open";$("#pp").innerHTML=`<h2>Colegio Hogwarts de Magia y Hechicería</h2><p style="text-align:center;font-size:14px">Director: Albus Dumbledore</p><p>Estimado/a ${esc(n)}:</p><p>Tenemos el placer de informarle de que dispone de una plaza en el Colegio Hogwarts de Magia y Hechicería. El curso comienza el 1 de septiembre. Esperamos su lechuza antes del 31 de julio.</p><p>Esta noche será recibido/a en el Gran Comedor para la ceremonia de selección.</p><p>Muy atentamente,<br><b>Minerva McGonagall</b><br>Subdirectora${d.s?`</p><p style="font-size:14px"><i>Lechuza enviada por ${esc(d.s)}.</i>`:""}</p><div style="text-align:center"><button class="btn" id="enter">Cruzar el umbral</button></div>`;$("#enter").onclick=()=>{$("#env").style.display="none";started=true;fade.style.opacity=0;setTimeout(()=>{if(my===runId)next()},1500)}};
+ const S=[
+  {w:"Gran Comedor",t:"Las pesadas puertas de roble se abren ante ti. Miles de velas flotan en el aire y el murmullo de los alumnos se apaga a tu paso.",cam:"1"},
+  {w:"Profesora McGonagall",t:`Buenas noches, ${n}. Soy la profesora McGonagall, subdirectora de Hogwarts.`,mc:1},
+  {w:"Profesora McGonagall",t:"Dentro de unos instantes serás seleccionado ante todo el colegio. Tu casa será como tu familia mientras estés aquí."},
+  {w:"Profesora McGonagall",t:"Tus triunfos te harán ganar puntos para ella; tus faltas, los harán perder. Acércate al taburete, por favor.",cam:"2",stool:1},
+  {w:"Gran Comedor",t:"Avanzas con el corazón desbocado y te sientas. La madera cruje bajo tu peso. Cientos de ojos te observan en silencio.",cam:"3",mc:0},
+  {w:"Gran Comedor",t:"La profesora levanta un viejo sombrero remendado y lo posa lentamente sobre tu cabeza. Todo se oscurece.",down:1},
+  {w:"El Sombrero Seleccionador",hat:1,t:`Hmmm… ¡Vaya, vaya! Qué mente tan interesante hay aquí dentro, ${n}.`},
+  {w:"El Sombrero Seleccionador",hat:1,t:`Veo una fecha grabada en tu destino: el ${I.fecha}. Naciste bajo el signo de ${I.sign}, y eso no es poca cosa.`},
+  {w:"El Sombrero Seleccionador",hat:1,t:`Veo ${q[0]}, ${q[1]} y ${q[2]}. Hace mucho que no encontraba algo así.`},
+  {w:"El Sombrero Seleccionador",hat:1,t:`Difícil… muy difícil… Hay valor, hay mente, hay lealtad. Pero tu espíritu de ${EL[I.el]} lo deja claro: lo tuyo es ${H.t}.`},
+  {hat:1,big:1,t:`¡${H.n}!`},
+  {w:"Profesora McGonagall",t:`Felicidades, ${n}. Ve a la mesa de ${H.n}: tus compañeros ya te esperan.`,mc:1,cam:"1",lift:1}
+ ];
+ function fin(){clearInterval(tm);tx.textContent=full;typing=false;hint.style.opacity=1;hat.classList.remove("talk")}
+ function next(){if(!started||my!==runId)return;if(typing){fin();return}i++;if(i>=S.length){showEnd();return}
+  const s=S[i];cur=s;if(s.cam)st.dataset.cam=s.cam;if("mc"in s)mc.classList.toggle("on",!!s.mc);if(s.stool)$("#stool").classList.add("on");
+  if(s.down){hat.classList.add("down");setTimeout(()=>vig.classList.add("on"),2200)}
+  if(s.lift){hat.classList.remove("down");vig.classList.remove("on")}
+  sub.className="sub on"+(s.hat?" hv":"")+(s.big?" shout":"");who.textContent=s.w||"";
+  if(s.big){fade.style.background=H.c1;fade.style.opacity=.9;setTimeout(()=>{fade.style.opacity=0},350);chime();for(let k=0;k<44;k++){const p=document.createElement("div");p.className="spark";p.style.cssText=`left:${40+Math.random()*20}%;top:${40+Math.random()*20}%;--x:${(Math.random()-.5)*700}px;--y:${(Math.random()-.8)*500}px`;st.appendChild(p)}}
+  full=s.t;tx.textContent="";let k=0;typing=true;hint.style.opacity=0;if(s.hat&&!s.big)hat.classList.add("talk");
+  say(s.t,s.hat);tm=setInterval(()=>{k+=1;tx.textContent=full.slice(0,k);if(k>=full.length)fin()},s.big?70:s.t.length>110?17:24)}
+ st.onclick=next;const bk=$("#bk");if(bk)bk.onclick=e=>{e.stopPropagation();location.hash=""};
+ function showEnd(){const e=$("#end");sub.classList.remove("on");speechSynthesis.cancel();
+  e.innerHTML=`<div class="in"><svg class="crest" viewBox="0 0 100 120"><path d="M8 8H92V62Q92 100 50 116Q8 100 8 62Z" fill="${H.c1}" stroke="${H.c2}" stroke-width="5"/><text x="50" y="72" font-size="46" text-anchor="middle">${H.e}</text></svg><small>Te damos la bienvenida a</small><h2>${H.n}</h2><small><i>${H.m}</i></small><ul><li>Nacimiento: ${I.fecha} · ${I.sign}</li><li>Tu don: ${q[0]}</li><li>Tu fuerza: ${q[1]}</li><li>Tu secreto: ${q[2]}</li></ul><small>Fantasma de tu casa: ${H.g}</small><button class="btn" id="again">Volver a vivirlo</button>${fromCr?'<button class="btn" id="back2">← Volver al creador</button>':''}</div>`;
+  e.classList.add("on");$("#again").onclick=()=>play(d);const b2=$("#back2");if(b2)b2.onclick=()=>{location.hash=""}}
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function route(){const h=location.hash.slice(1),d=h[0]==="c"&&h.length>8?dec(h):null;if(d&&d.n&&/^\d{4}-\d\d-\d\d$/.test(d.b||""))play(d);else{stopAll();creator()}}
+addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
